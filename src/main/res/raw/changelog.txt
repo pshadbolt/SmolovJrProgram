@@ -1,0 +1,15 @@
+11/01/2015
+
+- Added About section.
+
+- Included visual display of completed sets.
+
+- Implemented first pass of hit/miss function for sets.
+
+10/12/2015
+
+- Chime added for end of rest period.
+
+- Updated icons for completed workouts
+
+- Auto finish and save on training day completion

@@ -19,7 +19,6 @@ public class AboutActivity extends ActionBarActivity {
         setChangeLog();
     }
 
-    // setChangeLog
     private void setChangeLog(){
         BufferedInputStream stream = new BufferedInputStream(getResources().openRawResource(R.raw.changelog));
 
