@@ -18,6 +18,7 @@ import com.ssj.paul.smolovjrprogram.settings.SettingsActivity;
 
 public class WorkoutActivity extends ActionBarActivity {
 
+    //
     private WorkoutDataSource datasource;
     Workout workout = null;
 
