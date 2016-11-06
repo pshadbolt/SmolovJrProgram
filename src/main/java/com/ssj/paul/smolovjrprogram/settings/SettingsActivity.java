@@ -3,7 +3,7 @@ package com.ssj.paul.smolovjrprogram.settings;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.ssj.paul.smolovjrprogram.R;
 
 
-public class SettingsActivity extends ActionBarActivity implements AdapterView.OnItemSelectedListener, NumberPicker.OnValueChangeListener {
+public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, NumberPicker.OnValueChangeListener {
 
     private final TextWatcher mTextEditorWatcher = new TextWatcher() {
 

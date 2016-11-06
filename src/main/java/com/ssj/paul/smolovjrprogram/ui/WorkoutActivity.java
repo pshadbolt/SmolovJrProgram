@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -16,7 +17,7 @@ import com.ssj.paul.smolovjrprogram.settings.AboutActivity;
 import com.ssj.paul.smolovjrprogram.settings.DatabaseActivity;
 import com.ssj.paul.smolovjrprogram.settings.SettingsActivity;
 
-public class WorkoutActivity extends ActionBarActivity {
+public class WorkoutActivity extends AppCompatActivity {
 
     //
     private WorkoutDataSource datasource;
@@ -83,5 +84,11 @@ public class WorkoutActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop() {
+        datasource.close();
+        super.onRestart();
     }
 }

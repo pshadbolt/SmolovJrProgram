@@ -16,11 +16,12 @@ public class WorkoutDataSource {
 
     // Database fields
     private SQLiteDatabase database;
-    private ProgramOpenHelper dbHelper;
-    private String[] allColumns = {ProgramOpenHelper.COLUMN_ID, ProgramOpenHelper.COLUMN_SETS, ProgramOpenHelper.COLUMN_REPS, ProgramOpenHelper.COLUMN_WEIGHT, ProgramOpenHelper.COLUMN_DATE};
+    private WorkoutDataOpenHelper dbHelper;
+    private String[] allColumns = {WorkoutDataOpenHelper.COLUMN_ID, WorkoutDataOpenHelper.COLUMN_SETS, WorkoutDataOpenHelper.COLUMN_REPS, WorkoutDataOpenHelper.COLUMN_WEIGHT, WorkoutDataOpenHelper.COLUMN_DATE};
+
 
     public WorkoutDataSource(Context context) {
-        dbHelper = new ProgramOpenHelper(context);
+        dbHelper = new WorkoutDataOpenHelper(context);
     }
 
     public void open() throws SQLException {
@@ -37,15 +38,15 @@ public class WorkoutDataSource {
 
     public Workout createWorkout(int id, int sets, int reps, int weight, String date) {
         ContentValues values = new ContentValues();
-        values.put(ProgramOpenHelper.COLUMN_ID, id);
-        values.put(ProgramOpenHelper.COLUMN_SETS, sets);
-        values.put(ProgramOpenHelper.COLUMN_REPS, reps);
-        values.put(ProgramOpenHelper.COLUMN_WEIGHT, weight);
-        values.put(ProgramOpenHelper.COLUMN_DATE, date);
+        values.put(WorkoutDataOpenHelper.COLUMN_ID, id);
+        values.put(WorkoutDataOpenHelper.COLUMN_SETS, sets);
+        values.put(WorkoutDataOpenHelper.COLUMN_REPS, reps);
+        values.put(WorkoutDataOpenHelper.COLUMN_WEIGHT, weight);
+        values.put(WorkoutDataOpenHelper.COLUMN_DATE, date);
 
-        long insertId = database.insert(ProgramOpenHelper.PROGRAM_TABLE_NAME, null, values);
-        Cursor cursor = database.query(ProgramOpenHelper.PROGRAM_TABLE_NAME,
-                allColumns, ProgramOpenHelper.COLUMN_ID + " = " + insertId, null,
+        long insertId = database.insert(WorkoutDataOpenHelper.TABLE_NAME_PROGRAM, null, values);
+        Cursor cursor = database.query(WorkoutDataOpenHelper.TABLE_NAME_PROGRAM,
+                allColumns, WorkoutDataOpenHelper.COLUMN_ID + " = " + insertId, null,
                 null, null, null);
         cursor.moveToFirst();
         Workout newWorkout = cursorToWorkout(cursor);
@@ -56,13 +57,13 @@ public class WorkoutDataSource {
     public void deleteWorkout(Workout workout) {
         long id = workout.getId();
 
-        database.delete(ProgramOpenHelper.PROGRAM_TABLE_NAME, ProgramOpenHelper.COLUMN_ID
+        database.delete(WorkoutDataOpenHelper.TABLE_NAME_PROGRAM, WorkoutDataOpenHelper.COLUMN_ID
                 + " = " + id, null);
     }
 
     public Workout getWorkout(int index) {
         Workout workout = null;
-        Cursor cursor = database.query(ProgramOpenHelper.PROGRAM_TABLE_NAME, allColumns, ProgramOpenHelper.COLUMN_ID + " = " + index, null, null, null, null);
+        Cursor cursor = database.query(WorkoutDataOpenHelper.TABLE_NAME_PROGRAM, allColumns, WorkoutDataOpenHelper.COLUMN_ID + " = " + index, null, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
             workout = cursorToWorkout(cursor);
             cursor.close();
@@ -76,7 +77,7 @@ public class WorkoutDataSource {
     public List<Workout> getAllWorkouts() {
         List<Workout> workouts = new ArrayList<Workout>();
 
-        Cursor cursor = database.query(ProgramOpenHelper.PROGRAM_TABLE_NAME,
+        Cursor cursor = database.query(WorkoutDataOpenHelper.TABLE_NAME_PROGRAM,
                 allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
@@ -95,7 +96,7 @@ public class WorkoutDataSource {
      * Return the index of the last entry found in the database
      */
     public int getLastIndex() {
-        Cursor cursor = database.query(ProgramOpenHelper.PROGRAM_TABLE_NAME,
+        Cursor cursor = database.query(WorkoutDataOpenHelper.TABLE_NAME_PROGRAM,
                 allColumns, null, null, null, null, null);
 
         if (cursor.moveToLast())

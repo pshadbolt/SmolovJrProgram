@@ -2,6 +2,7 @@ package com.ssj.paul.smolovjrprogram.settings;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.ssj.paul.smolovjrprogram.R;
@@ -9,7 +10,7 @@ import com.ssj.paul.smolovjrprogram.R;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 
-public class AboutActivity extends ActionBarActivity {
+public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

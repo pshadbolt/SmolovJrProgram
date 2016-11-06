@@ -3,6 +3,7 @@ package com.ssj.paul.smolovjrprogram.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,10 +23,9 @@ import com.ssj.paul.smolovjrprogram.settings.SettingsActivity;
  * TODO: Resume training activity if running - shared preferences?
  * TODO: Archive DB
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     private WorkoutDataSource datasource;
-
     private ImageAdapter imageAdapter;
     private GridView gridView;
 
@@ -36,7 +36,6 @@ public class MainActivity extends ActionBarActivity {
 
         // Create the database connection
         datasource = new WorkoutDataSource(this);
-        datasource.open();
 
         // Populate the gridview
         gridView = (GridView) findViewById(R.id.grid_view);
@@ -50,8 +49,9 @@ public class MainActivity extends ActionBarActivity {
                 openWorkout(position);
             }
         });
-        setTrainButton();
     }
+
+
 
     /**
      * Control the state of the train button
@@ -71,6 +71,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        datasource.open();
         imageAdapter.notifyDataSetChanged();
         gridView.invalidateViews();
         setTrainButton();
@@ -79,9 +80,23 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        datasource.open();
         imageAdapter.notifyDataSetChanged();
         gridView.invalidateViews();
         setTrainButton();
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        datasource.open();
+        setTrainButton();
+    }
+
+    @Override
+    protected void onStop(){
+        datasource.close();
+        super.onStop();
     }
 
     @Override
@@ -115,12 +130,10 @@ public class MainActivity extends ActionBarActivity {
     // View a previous training day or launch new training
     public void openWorkout(int position) {
         Intent intent;
-
         if (datasource.getWorkout(position) != null)
             intent = new Intent(this, WorkoutActivity.class);
         else
             intent = new Intent(this, TrainingActivity.class);
-
         intent.putExtra("index", position);
         startActivity(intent);
     }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +30,7 @@ import java.util.Date;
 /**
  * TODO: Lifts hit or missed
  */
-public class TrainingActivity extends ActionBarActivity {
+public class TrainingActivity extends AppCompatActivity {
 
     private WorkoutDataSource datasource;
     private SharedPreferences settings;
@@ -112,6 +113,12 @@ public class TrainingActivity extends ActionBarActivity {
         super.onRestart();
         setTimer();
         setTrainingDay();
+    }
+
+    @Override
+    protected void onStop() {
+        datasource.close();
+        super.onRestart();
     }
 
     @Override
